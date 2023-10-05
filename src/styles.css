@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "~primeflex/primeflex.css";
+@import "primeicons/primeicons.css";
+html, 
+body {
+    height: 100%;
+    font-family: var(--font-family);
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+/* CUSTOM CLASSES */
+.h-6 {
+    height: 50% !important;
+}
+
+
+.max-h-6 {
+    max-width: 50% !important;
+}

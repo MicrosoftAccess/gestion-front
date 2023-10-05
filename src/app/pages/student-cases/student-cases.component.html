@@ -1,0 +1,50 @@
+<section class="flex w-full h-full flex-column">
+    <div class="flex w-full h-full flex-column ">
+        <div class="w-full h-5rem flex align-items-center"  [ngStyle]="{'background-color':'#19202E'}">
+            <img src="../../../assets/img/logo-h-2.png" style="width: 200px;" alt="">
+        </div> 
+<div class="w-full h-4rem">
+    <div class="grid h-full w-full">
+        <div class="col-4 flex align-items-center justify-content-center">
+
+        </div>
+        <div class="col-4 flex align-items-center justify-content-center">
+            <h1> MIS CASOS</h1>
+
+        </div>
+        <div class="col-4 flex align-items-center justify-content-center">
+            <p-button icon="pi pi-plus" (onClick)="goToPage(['/generate-cases']);" label="Generar caso" styleClass="p-button-success"></p-button>
+
+        </div>
+    </div>
+
+</div>
+        <div class="h-full w-full  flex justify-content-center align-items-start">
+            <div *ngIf="cases.length==0"><h1>No tienes casos</h1></div>
+            <p-table *ngIf="cases.length>0" [value]="cases"  [tableStyle]="{ 'min-width': '50rem','width':'60rem'}">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="text-center" style="background-color: #962330;color: white;">TÍTULO DEL CASO</th>
+                        <th class="text-center" style="background-color: #962330;color: white;">NRC</th>
+                        <th class="text-center" style="background-color: #962330;color: white;">FECHA DE CREACIÓN</th>
+                        <th class="text-center" style="background-color: #962330;color: white;">CAMPUS</th>
+                        <th class="text-center" style="background-color: #962330;color: white;">ESTADO</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-cases>
+                    <tr>
+                        <td class="text-center">{{cases.title}}</td>
+                        <td class="text-center">{{cases.nrc}}</td>
+                        <td class="text-center">{{cases.createdAt | date}}</td>
+                        <td class="text-center">{{cases.campus}}</td>
+                        <td *ngIf="cases.status=='UNSOLVED'" class="text-center">En espera</td>
+                        <td *ngIf="cases.status=='SOLVED'" class="text-center">Resuelto</td>
+                        
+                       
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+       
+    </div>
+</section>
