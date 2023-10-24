@@ -13,6 +13,9 @@ export class AppComponent {
   faCoffee = faCoffee;
   constructor(private _router: Router, private _jwtService: JwtHelperService){}
 
+  get displayNavBar(){
+    return this._router.url.includes('/login')
+  }
 
   ngOnInit(): void {
 

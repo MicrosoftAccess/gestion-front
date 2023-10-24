@@ -18,4 +18,14 @@ export class CasesService {
   getAllCases(){
     return this.http.get(`${this.BASE_URL}/cases`)
   }
+
+  getCase(id:any){
+    return this.http.get(`${this.BASE_URL}/cases/${id}`)
+  }
+
+  updateCase(id:number, updateCaseForm: any){
+    return this.http.patch(`${this.BASE_URL}/cases/${id}`,updateCaseForm)
+  }
+
+
 }

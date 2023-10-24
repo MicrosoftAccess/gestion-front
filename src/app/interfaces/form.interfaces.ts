@@ -7,6 +7,12 @@ export interface IGetLoginResponse {
     access_token: string
 }
 
+export interface IGetUserInfo{
+    role: string,
+    name: string,
+    surname: string
+}
+
 export interface CaseForm{
     title: string,
     nrc: number,
@@ -23,4 +29,20 @@ export interface Case {
     status: string;
     campus: string;
     userId: number;
+}
+
+export interface Campus{
+    id: number,
+    name: string
+}
+
+export enum AllowedStatus {
+    'APPROVED',
+    'REJECTED'
+}
+
+export interface Status {
+    id:number;
+    name: string;
+    enum: AllowedStatus
 }

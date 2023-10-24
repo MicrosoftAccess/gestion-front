@@ -6,18 +6,20 @@ import { InputTextModule } from 'primeng/inputtext';
 import { GenerateCasesComponent } from './generate-cases.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { DropdownModule } from 'primeng/dropdown';
+import { SharedModule } from 'src/app/components/shared.module';
 
 @NgModule({
   declarations: [GenerateCasesComponent],
   imports: [
     CommonModule,
     GenerateCasesRoutingModule,
-    InputTextModule,
     ButtonModule,
-    InputTextareaModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DropdownModule,
+    InputTextareaModule,
+    InputTextModule,
   ]
 })
 export class GenerateCasesModule { }

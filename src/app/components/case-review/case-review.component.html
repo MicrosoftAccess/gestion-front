@@ -1,0 +1,158 @@
+<p-dialog (onHide)="handleClose()" [header]="case?.title" [(visible)]="visible" [modal]="true"
+    [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+
+    <div class="flex flex-column gap-2 py-2">
+        <div class="flex flex-row justify-content-between">
+            <h5 class="m-0 text-gray-500">
+
+                {{case?.createdAt | date:"MMM dd, yyyy 'a las' hh:mm a" | titlecase}}
+            </h5>
+            <div>
+                <!-- <p-button [label]="case?.files" text="true" class="p-button-text" (onClick)="handleDownload(case.files)" ></p-button> -->
+                <button  [label]="(case?.files.length>15)?(case?.files | slice:0:15)+'....':(case?.files)" (click)="handleDownload(case.files)"  pButton type="button" label="Submit" class="p-button-text"></button>
+
+            </div>
+
+        </div>
+            <div class="flex flex-column gap-1">
+                <label for="description text-gray-500">Detalle: </label>
+                <textarea id="description" disabled="true" [value]="case?.description" rows="5" cols="30" pInputTextarea [ngStyle]="{'resize':'none','width':'100%','height':'100%'}"></textarea>
+            </div>
+            <div class="flex w-full align-items-center justify-content-between">
+                <h5>Estudiante: {{case?.student.name}} {{case?.student.surname}}</h5>
+                <h5>Rut estudiante: {{case?.student.rut}}</h5>
+            </div>
+    </div>
+
+    <!-- <ng-container *ngIf="userRole === 'STUDENT'; then student else professor"></ng-container> -->
+    <ng-container [ngSwitch]="userRole">
+        <ng-container  *ngSwitchCase="'STUDENT'" [ngTemplateOutlet]="student"></ng-container>
+        <ng-container  *ngSwitchCase="'PROFESSOR'" [ngTemplateOutlet]="professor"></ng-container>
+        <ng-container  *ngSwitchCase="'VR'" [ngTemplateOutlet]="vr"></ng-container>
+    </ng-container>
+    <ng-template #student>
+        <p-divider></p-divider>
+
+        <div *ngIf="case?.status=='UNSOLVED'" class="flex align-items-center justify-content-center flex-row gap-3">
+            <h3>Aún no hay respuesta</h3>
+            <i class="pi pi-info-circle"></i>
+        </div>
+        <div *ngIf="case?.vrResponse!=null && case?.response==null" class="flex flex-column gap-2">
+            <div class="flex flex-row justify-content-between align-items-center">
+                <h5 class="m-0 text-gray-500">
+                    {{case?.respondedAt | date:"MMM dd, yyyy 'a las' hh:mm a" | titlecase}}
+                </h5>
+                
+            </div>
+            <div class="m-0">
+                <div class="flex flex-column gap-1">
+                    <label for="description text-gray-500">Detalle: </label>
+                    <textarea id="description" disabled="true" [value]="case?.vrResponse" rows="5" cols="30" pInputTextarea [ngStyle]="{'resize':'none','width':'100%','height':'100%'}"></textarea>
+                </div>
+            </div>
+            <h5>Respondido por: {{case?.VR.name}} {{case?.VR.surname}}
+            </h5>
+        </div>
+        <div *ngIf="case?.response" class="flex flex-column gap-2">
+            <div class="flex flex-row justify-content-between align-items-center">
+                <h5 class="m-0 text-gray-500">
+                    {{case?.respondedAt | date:"MMM dd, yyyy 'a las' hh:mm a" | titlecase}}
+                </h5>
+                <h5 *ngIf="!case?.dataTest">
+                    Nueva fecha evaluación:
+                     {{case?.dateTest | date:"fullDate" | titlecase}}
+                </h5>
+            </div>
+            <div class="m-0">
+                <div class="flex flex-column gap-1">
+                    <label for="description text-gray-500">Detalle: </label>
+                    <textarea id="description" disabled="true" [value]="case?.response" rows="5" cols="30" pInputTextarea [ngStyle]="{'resize':'none','width':'100%','height':'100%'}"></textarea>
+                </div>
+            </div>
+            <h5>Profesor: {{case?.professor.name}} {{case?.professor.surname}}
+            </h5>
+        </div>
+    </ng-template>
+
+    <ng-template #professor>
+
+        <div *ngIf="action != 'VIEW'">
+            <p-divider></p-divider>
+
+            <form [formGroup]="caseReviewForm" (ngSubmit)="onSubmit(case.id)">
+                <div class="flex align-items-center justify-content-center flex-column gap-3">
+                    <div class="flex flex-row justify-content-between align-items-center w-full">
+
+                        <div  class="flex flex-row w-full align-items-center">
+                            <div class="w-6">
+                                <h3>Revisando caso del estudiante</h3>
+
+                            </div>
+                            <div class="flex w-6 align-items-center justify-content-end gap-3">
+
+                                <h5>Seleccione una fecha:</h5>
+                                <p-calendar [minDate]="minDate" dateFormat="dd/mm/yy" dataType="date" [readonlyInput]="true" appendTo="body" formControlName="dateTest"></p-calendar>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="flex gap-2 w-full flex-column">
+                        <label for="response text-gray-500">Escriba su respuesta: </label>
+                        <textarea id="response" rows="5" cols="30" pInputTextarea formControlName="response" [ngStyle]="{'resize':'none','width':'100%','height':'100%'}"></textarea>
+
+                    </div>
+                    <div class="flex justify-content-between align-items-center w-full">
+                        <div class="w-6">
+                            <h5>Profesor: {{user}}</h5>
+
+                        </div>
+                        <div class="flex justify-content-end w-6">
+                            <button type="submit" pButton pRipple label="Enviar" class="p-button-success"></button>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </ng-template>
+    <ng-template #vr>
+        <div *ngIf="action != 'VIEW'">
+            <p-divider></p-divider>
+
+            <form [formGroup]="caseReviewFormVR" (ngSubmit)="onSubmitVR(case.id)">
+                <div class="flex align-items-center justify-content-center flex-column gap-3">
+                    <div class="flex flex-row justify-content-between align-items-center w-full">
+
+                        <div  class="flex flex-row w-full align-items-center">
+                            <div class="w-6">
+                                <h3>Revisando caso del estudiante</h3>
+
+                            </div>
+                            <div class="flex w-6 align-items-center justify-content-end gap-3">
+
+                                <h5>Seleccione una fecha:</h5>
+                                <p-dropdown optionValue="enum" [options]="status" [style]="{'width': '10rem'}" formControlName="status" optionLabel="name" placeholder="Selecione un estado"></p-dropdown>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="flex gap-2 w-full flex-column">
+                        <label for="response text-gray-500">Escriba su respuesta: </label>
+                        <textarea id="response" rows="5" cols="30" pInputTextarea formControlName="vrResponse" [ngStyle]="{'resize':'none','width':'100%','height':'100%'}"></textarea>
+
+                    </div>
+                    <div class="flex justify-content-between align-items-center w-full">
+                        <div class="w-6">
+                            <h5>Usuario vicerrectoría: {{user}}</h5>
+
+                        </div>
+                        <div class="flex justify-content-end w-6">
+                            <button type="submit" pButton pRipple label="Enviar" class="p-button-success"></button>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </ng-template>
+</p-dialog>

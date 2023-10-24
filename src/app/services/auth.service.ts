@@ -5,6 +5,7 @@ import { tokenGetter } from '../utils/jwt.util';
 
 
 export const authFactory = (authService: AuthService) => () => {
+
   // initialize auth state
 // check item validity
   const _localuser: any = tokenGetter();
@@ -46,6 +47,7 @@ export class AuthService {
     return true;
   }
 
+  
 
   SetState(item: any) {
     this.stateItem.next(item);
