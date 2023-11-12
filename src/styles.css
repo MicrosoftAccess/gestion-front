@@ -17,9 +17,10 @@ body {
     height: 50% !important;
 }
 
+.max-w-input{
+    width: 100%;
+}
 
-
-
-.max-h-6 {
+.max-w-6 {
     max-width: 50% !important;
 }

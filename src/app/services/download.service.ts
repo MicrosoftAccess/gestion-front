@@ -14,4 +14,8 @@ export class DownloadService {
   downloadFile(file:any): Observable<any>{
     return this.http.get(`${this.BASE_URL}/download/${file}`, {observe: 'response', responseType: 'blob'})
   }
+
+  downloadExcel(query:any){
+    return this.http.post(`${this.BASE_URL}/report/generate/excel`,query,{responseType:'blob'})
+  }
 }

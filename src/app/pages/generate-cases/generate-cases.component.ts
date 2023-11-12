@@ -36,6 +36,7 @@ export class GenerateCasesComponent {
   campusDropDown!: Campus[];
   isDisabled:boolean = false
   fileName = '';
+  file:any
   nrcDropDown!: any;
   selectedCampus!: Campus;
   selectedNRC!:any
@@ -69,6 +70,11 @@ export class GenerateCasesComponent {
 
     reader.readAsDataURL(file);
     this.f['file'].setValue(file);
+    this._messageService.add({
+      severity: 'info',
+      summary: 'Archivo subido',
+      detail: 'Se ha subido tu archivo con éxito',
+    });
   }
 
   getNrcs(){
@@ -79,6 +85,10 @@ export class GenerateCasesComponent {
         
       },
     })
+  }
+
+  removePicture(hiddenPicAccessor:any){
+    console.log(hiddenPicAccessor)
   }
 
   getNRCbyCampus(event:any){

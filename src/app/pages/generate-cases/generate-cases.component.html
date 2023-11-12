@@ -1,19 +1,24 @@
 <section class="flex w-full h-full flex-column">
-    <div class="flex w-full h-full flex-column ">
-        <div class="w-full h-5rem flex align-items-center">
-            <div class="ml-4">
-                <p-button (onClick)="goToPage('/student-cases')"
-                    icon="pi pi-arrow-left"
-                    styleClass="p-button-rounded p-button-secondary p-button-text p-button-raised"></p-button>
-            </div>
-        </div>
+    <div class="flex w-full h-full flex-column justify-content-center align-items-center surface-ground">
+       
         <div
-            class="flex justify-content-center align-items-center w-full h-full">
+            class="flex justify-content-center align-items-center bg-white w-9 h-full shadow-2 flex-column">
+            <div class="flex justify-content-center w-full">
+                <div class="grid w-full">
+                    <div class="flex justify-content-center col-3">
+                        <p-button (onClick)="goToPage('/student-cases')"
+                        icon="pi pi-arrow-left"
+                        styleClass="p-button-rounded p-button-secondary p-button-text p-button-raised"></p-button>
+
+                    </div>
+                </div>
+            </div>
             <div
                 class="flex flex-column w-6 h-6 shadow-1 border-round align-items-center justify-content-center">
                 <div
                     class="flex justify-content-center w-full border-round-top align-items-center h-3rem text-white"
                     style="background-color: #223a86;">
+                    
                     <h3>Generar Caso</h3>
                 </div>
                 <form class="w-full h-full" [formGroup]="caseForm"
@@ -39,13 +44,13 @@
                             </div> -->
                         </div>
                         <div class="grid mt-2">
-                            <div class="col-4 justify-content-end">
+                            <div class="col-4 justify-content-start">
                                 <!-- <input placeholder="Campus" formControlName="campus" pInputText  /> -->
                                 <p-dropdown placeholder="Campus"
                                     [options]="campusDropDown"
                                     (onChange)="getNRCbyCampus($event)"
                                     formControlName="campus" optionLabel="name"
-                                    optionValue="id" [style]="{'width':'90%','marginLeft':'25px'}"></p-dropdown>
+                                    optionValue="id" [style]="{'width':'90%','marginLeft':'18px'}"></p-dropdown>
                             </div>
                             
                             <div class="col-8 justify-content-end">
@@ -68,9 +73,15 @@
                         </div>
                         <div
                             class="w-full h-3rem flex justify-content-between align-items-center px-4 pb-4 flex-row">
+                            <!-- <p-fileUpload #inputFile class="form-control" type="file" mode="basic" chooseLabel="Suba un archivo"  name="demo[]"   (onUpload)="processFile($event)"></p-fileUpload> -->
 
-                            <input #inputFile class="form-control" type="file"
-                                (change)="processFile($event)">
+                            <div>
+                                
+                                <p-button icon="pi pi-plus" label="Subir archivo" (click)="inputFile.click()"></p-button>
+                                <input  #inputFile [value]="file" class="form-control hidden" type="file"
+                                    (change)="processFile($event)">
+
+                            </div>
                             <button pButton pRipple label="Enviar"
                                 class="p-button-success"></button>
                         </div>

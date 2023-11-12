@@ -10,10 +10,11 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
 import { NavbarComponent } from './navbar/navbar.component';
 import { InputTextModule } from 'primeng/inputtext';
+import { CaseStatusPipe } from '../pipes/case-status.pipe';
 @NgModule({
   declarations: [
     CaseReviewComponent,
-    NavbarComponent
+    NavbarComponent,
   ],
   imports: [
     CommonModule,
@@ -29,7 +30,7 @@ import { InputTextModule } from 'primeng/inputtext';
   ],
   exports: [
     CaseReviewComponent,
-    NavbarComponent
+    NavbarComponent,
   ]
 })
 export class SharedModule { }

@@ -19,7 +19,7 @@ export class LoginComponent {
     private _router: Router
   ) {
     this.loginForm = this._fb.group({
-      email: ['j.retamalesvilches1@uandresbello.edu', Validators.required],
+      email: ['jpretamalesv@gmail.com', Validators.required],
       password: ['pass123', Validators.required],
     });
   }

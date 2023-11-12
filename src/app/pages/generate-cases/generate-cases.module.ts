@@ -8,7 +8,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { SharedModule } from 'src/app/components/shared.module';
-
+import { FileUploadModule } from 'primeng/fileupload';
 @NgModule({
   declarations: [GenerateCasesComponent],
   imports: [
@@ -20,6 +20,7 @@ import { SharedModule } from 'src/app/components/shared.module';
     DropdownModule,
     InputTextareaModule,
     InputTextModule,
+    FileUploadModule
   ]
 })
 export class GenerateCasesModule { }

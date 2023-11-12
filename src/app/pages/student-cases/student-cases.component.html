@@ -1,326 +1,587 @@
-<section class="flex w-full h-full flex-column">
-    <div class="flex w-full h-full flex-column ">
+<section class="w-full h-full ">
+    <div class="flex w-full h-full flex-column justify-content-center align-items-center surface-ground">
 
-        <div class="w-full h-4rem">
-            <div class="grid h-full w-full">
-                <div
-                    class="col-4 flex align-items-center justify-content-center">
-
-                </div>
-                <div
-                    class="col-4 flex align-items-center justify-content-center">
-                    <h1> MIS CASOS</h1>
-
-                </div>
-                <div
-                    class="col-4 flex align-items-center justify-content-center">
-                    <p-button *ngIf="userRole ==='STUDENT'"
-                        icon="pi pi-plus"
-                        (onClick)="goToPage(['/generate-cases']);"
-                        label="Generar caso" styleClass="p-button-success"></p-button>
-
-                </div>
-            </div>
-
-        </div>
-        <!-- <ng-container [ngSwitch]="userRole">
-            <ng-container  *ngSwitchCase="'STUDENT'" [ngTemplateOutlet]="student"></ng-container>
-            <ng-container  *ngSwitchCase="'PROFESSOR'" [ngTemplateOutlet]="professor"></ng-container>
-            <ng-container  *ngSwitchCase="'VR'" [ngTemplateOutlet]="vr"></ng-container>
-        </ng-container> -->
-        <!-- <ng-template  #student
-           >
-           <div  class="h-full w-full  flex justify-content-center align-items-start">
-
-               <p-table  [rowsPerPageOptions]="[5, 10, 15]" [rows]="5" [paginator]="true"  [value]="cases"
-                   [tableStyle]="{ 'min-width': '50rem','width':'60rem'}">
-                   <ng-template pTemplate="header">
-                       <tr>
-                           <th class="text-center"
-                               style="background-color: #962330;color: white;">TÍTULO
-                               DEL CASO</th>
-                           <th class="text-center"
-                               style="background-color: #962330;color: white;">ASIGNATURA</th>
-                           <th class="text-center"
-                               style="background-color: #962330;color: white;">FECHA
-                               DE CREACIÓN</th>
-                           <th class="text-center"
-                               style="background-color: #962330;color: white;">CAMPUS</th>
-                           <th class="text-center"
-                               style="background-color: #962330;color: white;">ESTADO</th>
-                           <th class="text-center"
-                               style="background-color: #962330;color: white;">VER</th>
-                       </tr>
-                   </ng-template>
-                   <ng-template pTemplate="body" let-cases>
-                       <tr>
-                           <td class="text-center">{{cases.title}}</td>
-                           <td  class="text-center">{{(cases.nrc.name.length>5)? (cases.nrc.name | slice:0:10)+'...':(cases.nrc.name)}}</td>
-                           <td class="text-center">{{cases.createdAt | date}}</td>
-                           <td class="text-center">{{cases.campus.name}}</td>
-                           <td *ngIf="cases.status=='UNSOLVED'" class="text-center">En
-                               espera</td>
-                           <td *ngIf="cases.status=='APPROVED'" class="text-center">Aprobado</td>
-                           <td *ngIf="cases.status=='REJECTED'" class="text-center">Rechazado</td>
-                           <td *ngIf="cases.status=='SOLVED'" class="text-center">Resuelto</td> 
-                           <td class="text-center">
-                               <p-button
-                                   styleClass="p-button-rounded p-button-secondary p-button-text "
-                                   icon="pi pi-eye" (onClick)="getCase(cases.id, 'VIEW')"></p-button>
-                              
-                               <p-button *ngIf="cases.status=='UNSOLVED' && userRole == 'VR'" 
-                                   styleClass="p-button-rounded p-button-secondary p-button-text"
-                                   icon="pi pi-pencil"
-                                   (onClick)="getCase(cases.id, 'EDIT')"></p-button>
-                               <p-button *ngIf="cases.status=='APPROVED' && userRole == 'PROFESSOR'" 
-                                   styleClass="p-button-rounded p-button-secondary p-button-text"
-                                   icon="pi pi-pencil"
-                                   (onClick)="getCase(cases.id, 'EDIT')"></p-button>
-                           </td>
+       
+        <ng-container [ngSwitch]="userRole">
+            <ng-container  *ngSwitchCase="'STUDENT'" [ngTemplateOutlet]="student"></ng-container> 
+            <ng-container  *ngSwitchCase="'PROFESSOR'" [ngTemplateOutlet]="professor"></ng-container> 
+            <ng-container *ngSwitchCase="'VR'" [ngTemplateOutlet]="vr"></ng-container>
+        </ng-container>
+        
    
-                       </tr>
-                   </ng-template>
-                   <ng-template class="flex align-items-center justify-content-center" pTemplate="emptymessage" let-columns>
-                               No hay casos
-                   </ng-template>
-               </p-table>
-           </div>
-        </ng-template > -->
-        <!-- <ng-template  #vr
-           >
-           <div  class="h-full w-full  flex justify-content-center align-items-start">
+       
 
-            <p-table
-            #dt2
-            [value]="cases"
-            dataKey="id"
-            [rows]="10"
-            [showCurrentPageReport]="true"
-            [rowsPerPageOptions]="[10, 25, 50]"
-            [loading]="loading"
-            [paginator]="true"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-            [tableStyle]="{ 'min-width': '75rem' }"
-            >
-            <ng-template pTemplate="caption">
-                <div class="flex">
-                    <span class="p-input-icon-left ml-auto">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
-                    </span>
+        <ng-template #vr>
+            <div  class="h-full w-9 flex flex-column justify-content-center align-items-center bg-white shadow-2"> 
+               
+                <p-sidebar [(visible)]="sidebarVisible">
+                    <div class="w-full">
+                        <h3>Generar excel por:</h3>
+                        <div class="flex flex-column gap-3 w-full align-items-center justify-content-center">
+                            <span class="w-full">
+                                <p-dropdown [style]="{'width':'100%'}" (onChange)="onChange()" [(ngModel)]="selectedQuery" [options]="query"  optionLabel="name"  placeholder="Seleccione filtos"></p-dropdown>
+                            </span>
+                            <ng-container [ngSwitch]="selectedQuery?.code">
+                                <ng-container  *ngSwitchCase="'RG'" [ngTemplateOutlet]="rg"></ng-container>
+                                 <ng-container  *ngSwitchCase="'CA'" [ngTemplateOutlet]="ca"></ng-container>
+                               <ng-container  *ngSwitchCase="'PR'" [ngTemplateOutlet]="pr"></ng-container>
+                                <ng-container  *ngSwitchCase="'NRC'" [ngTemplateOutlet]="nrc"></ng-container>
+                            </ng-container>
+
+                            <ng-template #rg> 
+                                <button (click)="onClick(1)"  label="Descargar Excel" pButton type="button" icon="pi pi-download" class="p-button-success" iconPos="right"></button>
+                        </ng-template>
+                            <ng-template #ca>
+                                <!-- <form (ngSubmit)="onClick(2)" [formGroup]="campusForm" class="flex gap-3 flex-column w-full" >
+                                    <span class="w-full">
+                                        <p-dropdown [style]="{'width':'100%'}" formControlName="campus"   [options]="campus"  optionLabel="name"  placeholder="Seleccione un campus"></p-dropdown>
+                                    </span>
+                                    <span class="w-full">
+                                        <p-dropdown [style]="{'width':'100%'}" formControlName="period"  [options]="periods"  optionLabel="name"  placeholder="Seleccione un periodo"></p-dropdown>
+                                    </span>
+                                    <button type="submit" label="Descargar Excel" pButton type="button" icon="pi pi-download" class="p-button-success" iconPos="right"></button>
+                                </form> -->
+                                <form [formGroup]="campusForm" (ngSubmit)="onClick(2)" class="w-full">
+                                    <div class="flex align-items-center justify-content-center flex-column gap-3">
+                                      
+                                            <span class="w-full">
+                                                <p-dropdown [style]="{'width':'100%'}" formControlName="campus"  [options]="campus"  optionLabel="name"  placeholder="Seleccione un periodo"></p-dropdown>
+                                            </span>
+                                            <span class="w-full">
+                                                <p-dropdown [style]="{'width':'100%'}" formControlName="period"  [options]="periods"  optionLabel="name"  placeholder="Seleccione un periodo"></p-dropdown>
+                                            </span>
+                                           
+                                                <button type="submit" pButton pRipple label="Descargar excel" icon="pi pi-download" iconPos="right" class="p-button-success"></button>
+                    
+                                    </div>
+                                </form>
+                            </ng-template>
+                            <ng-template #pr> 
+                                    <button (click)="onClick(3)"  label="Descargar Excel" pButton type="button" icon="pi pi-download" class="p-button-success" iconPos="right"></button>
+                            </ng-template>
+                            <ng-template #nrc>
+
+    
+                                    <button (click)="onClick(4)"  label="Descargar Excel" pButton type="button" icon="pi pi-download" class="p-button-success" iconPos="right"></button>
+                            </ng-template>
+
+                        </div>
+
+                    </div>
+                </p-sidebar>
+                <div class="h-full w-full flex justify-content-center align-items-center flex-column">
+                    <div style="background-color: #962330;color: white" class=" flex w-10 justify-content-center align-items-center">
+                        <h3>
+                            CASOS ESTUDIANTE
+                        </h3>
+                            
+                    </div>
+                
+
+                <div class="w-10 h-auto">
+                    <p-table
+                    #dt1
+                    [tableStyle]="{'backgroundColor':'blue'}"
+                    [value]="cases"
+                    dataKey="id"
+                    [scrollable]="true" 
+                    scrollHeight="470px"
+                    [rows]="5"
+                    [showCurrentPageReport]="true"
+                    [rowsPerPageOptions]="[5, 10, 15]"
+                    [paginator]="true"
+                    currentPageReportTemplate="Mostrando {first} de hasta {last} de {totalRecords} entradas"
+                    [globalFilterFields]="['title', 'nrc.name', 'campus.name', 'status | caseStatus']"
+        >
+            <ng-template pTemplate="caption" >
+                <div class="flex  flex-row align-items-center gap-2" >
+                    <div class="flex w-6 gap-2">
+                        <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                        <button (click)="sidebarVisible = true"  pButton type="button" icon="pi pi-file-excel" class="p-button-success" iconPos="left"></button>
+                    </div>
+                    <div class="w-6 flex justify-content-end">
+                        <span class="p-input-icon-left ml-auto">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar" />
+                        </span>
+              
+
+                    </div>
                 </div>
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th style="width:22%">TITULO</th>
-                    <th style="width:22%">ASIGNATURA</th>
-                    <th style="width:22%">FECHA DE CREACIÓN</th>
-                    <th style="width:22%">CAMPUS</th>
-                    <th style="width:12%">ESTADO</th>
-                    <th style="width:12%">VER</th>
-                </tr>
-                <tr>
-                    <th>
-                        <p-columnFilter type="text" field="name"></p-columnFilter>
+                    <th style="min-width:15rem" >
+                        <div class="flex align-items-center flex-row w-full ">
+                            <p-columnFilter type="text" field="title" display="menu"></p-columnFilter>
+                            Título
+                        </div>
                     </th>
-                    <th>
-                        <p-columnFilter type="text" field="country.name"></p-columnFilter>
+                    <th style="min-width:15rem" class=" text-center">
+                        <div class="flex align-items-center w-full ">
+                            <p-columnFilter type="text" field="nrc.name" display="menu"></p-columnFilter>
+                            Asignatura
+                        </div>
                     </th>
-                    <th>
-                        <p-columnFilter field="representative" matchMode="in" [showMenu]="false">
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
-                                    <ng-template let-option pTemplate="item">
-                                        <div class="inline-block vertical-align-middle">
-                                            <img [alt]="option.label" src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ option.image }}" width="24" class="vertical-align-middle" />
-                                            <span class="ml-1 mt-1">{{ option.name }}</span>
-                                        </div>
-                                    </ng-template>
-                                </p-multiSelect>
-                            </ng-template>
-                        </p-columnFilter>
+        
+                    <th style="min-width:10rem">
+                        <div class="flex align-items-center w-full ">
+                            <p-columnFilter type="date" field="date" display="menu"></p-columnFilter>
+                            Fecha de creación
+                        </div>
                     </th>
-                    <th>
-                        <p-columnFilter field="status" matchMode="equals" [showMenu]="false">
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any" [showClear]="true">
-                                    <ng-template let-option pTemplate="item">
-                                        <p-tag [value]="option.value" [severity]="getSeverity(option.label)"></p-tag>
-                                    </ng-template>
-                                </p-dropdown>
-                            </ng-template>
-                        </p-columnFilter>
+                    <th style="min-width:10rem">
+                        <div class="flex align-items-center w-full ">
+                            <p-columnFilter type="text" field="campus.name" display="menu" ></p-columnFilter>
+                            Campus
+                        </div>
                     </th>
-                    <th>
-                        <p-columnFilter type="boolean" field="verified"></p-columnFilter>
+                    <th style="min-width:10rem">
+                        <div class="flex align-items-center w-full ">
+                           
+                            <p-columnFilter field="status" matchMode="equals" display="menu">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-dropdown class="text-center" [options]="statuses" (onChange)="filter($event.value)" placeholder="Cualquiera">
+                                        <ng-template let-option pTemplate="item" >
+                                            <p-tag [value]="option.label" [severity]="getSeverity(option.value)"></p-tag>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </ng-template>
+                            </p-columnFilter>
+                            Estado
+                        </div>
                     </th>
+                    <th style="min-width:10rem" class="text-center">
+                            Acción
+                          
+                    </th>
+                    
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-customer>
+            <ng-template pTemplate="body" let-case>
                 <tr>
-                    <td>
-                        {{ customer.name }}
+                    <td class="text-center">
+                        {{ case.title }}
                     </td>
-                    <td>
-                        <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + customer.country.code" style="width: 20px" />
-                        <span class="ml-1 vertical-align-middle">{{ case.title }}</span>
+                    <td class="text-center">
+                        {{case.nrc.name}}
+                        <!-- {{(case.nrc.name.length>5)? (case.nrc.name | slice:0:10)+'...':(case.nrc.name)}} -->
                     </td>
-                    <td>
-                        <img [alt]="customer.representative.name" src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ customer.representative.image }}" width="32" style="vertical-align: middle" />
-                        <span class="ml-1 vertical-align-middle">{{ customer.representative.name }}</span>
+                    <td class="text-center">
+                        {{ case.createdAt | date: 'MM/dd/yyyy' }}
                     </td>
-                    <td>
-                        <p-tag [value]="case.status" [severity]="getSeverity(case.status)"></p-tag>
+                    <td class="text-center">
+                        {{ case.campus.name }}
                     </td>
-                    <td>
-                        <i class="pi" [ngClass]="{ 'text-green-500 pi-check-circle': customer.verified, 'text-red-500 pi-times-circle': !customer.verified }"></i>
+                    <td style="text-align:center">
+                        <!-- {{case.status | caseStatus}} -->
+                        <p-tag [value]="case.status | caseStatus" [severity]="getSeverity(case.status)"></p-tag>
+                    </td>
+                 
+                    <td style="text-align:center">
+                        <p-button
+                        styleClass="p-button-rounded p-button-secondary p-button-text "
+                        icon="pi pi-eye" (onClick)="getCase(case.id, 'VIEW')"></p-button>
+                        <p-button *ngIf="case.status=='UNSOLVED'" 
+                        styleClass="p-button-rounded p-button-secondary p-button-text"
+                        icon="pi pi-pencil"
+                        (onClick)="getCase(case.id, 'EDIT')"></p-button>
                     </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td colspan="5">No customers found.</td>
+                    <td colspan="7">No hay casos.</td>
                 </tr>
             </ng-template>
-        </p-table>
-           </div>
-        </ng-template > -->
-        <div
-            class="h-full w-full  flex justify-content-center align-items-start">
-            <p-table  [rowsPerPageOptions]="[5, 10, 15]" [rows]="5" [paginator]="true"  [value]="cases"
-                [tableStyle]="{ 'min-width': '50rem','width':'60rem'}">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th class="text-center"
-                            style="background-color: #962330;color: white;">TÍTULO
-                            DEL CASO</th>
-                        <th class="text-center"
-                            style="background-color: #962330;color: white;">ASIGNATURA</th>
-                        <th class="text-center"
-                            style="background-color: #962330;color: white;">FECHA
-                            DE CREACIÓN</th>
-                        <th class="text-center"
-                            style="background-color: #962330;color: white;">CAMPUS</th>
-                        <th class="text-center"
-                            style="background-color: #962330;color: white;">ESTADO</th>
-                        <th class="text-center"
-                            style="background-color: #962330;color: white;">VER</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-cases>
-                    <tr>
-                        <td class="text-center">{{cases.title}}</td>
-                        <td  class="text-center">{{(cases.nrc.name.length>5)? (cases.nrc.name | slice:0:10)+'...':(cases.nrc.name)}}</td>
-                        <td class="text-center">{{cases.createdAt | date}}</td>
-                        <td class="text-center">{{cases.campus.name}}</td>
-                        <td *ngIf="cases.status=='UNSOLVED'" class="text-center">En
-                            espera</td>
-                        <td *ngIf="cases.status=='APPROVED'" class="text-center">Aprobado</td>
-                        <td *ngIf="cases.status=='REJECTED'" class="text-center">Rechazado</td>
-                        <td *ngIf="cases.status=='SOLVED'" class="text-center">Resuelto</td> 
-                        
-                        <td class="text-center">
-                            <p-button
-                                styleClass="p-button-rounded p-button-secondary p-button-text "
-                                icon="pi pi-eye" (onClick)="getCase(cases.id, 'VIEW')"></p-button>
-                            
-                            <p-button *ngIf="cases.status=='UNSOLVED' && userRole == 'VR'" 
-                                styleClass="p-button-rounded p-button-secondary p-button-text"
-                                icon="pi pi-pencil"
-                                (onClick)="getCase(cases.id, 'EDIT')"></p-button>
-                            <p-button *ngIf="cases.status=='APPROVED' && userRole == 'PROFESSOR'" 
-                                styleClass="p-button-rounded p-button-secondary p-button-text"
-                                icon="pi pi-pencil"
-                                (onClick)="getCase(cases.id, 'EDIT')"></p-button>
-                        </td>
+                    </p-table>
+                </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #student>
+            <div  class="h-full w-9 flex flex-column justify-content-center align-items-end bg-white shadow-2"> 
+               
+                
+                <div class="h-full w-full flex justify-content-center align-items-center flex-column">
+                    <div style="background-color: #962330;color: white" class=" flex w-10 justify-content-center align-items-center">
+                        <div class="w-full h-full grid">
+                            <div class="col-4">
 
-                    </tr>
-                </ng-template>
-                <ng-template class="flex align-items-center justify-content-center" pTemplate="emptymessage" let-columns>
-                            No hay casos
-                </ng-template>
-            </p-table>
-        </div>
+                            </div>
+                            <div class="flex justify-content-center col-4">
+                                <h3>
+                                    MIS CASOS
+                                </h3>
+                                
+                            </div>
+                                
+                            <div class="flex col-4 justify-content-end align-items-center">
+                                <button pButton (click)="goToPage(['/generate-cases']);" label="Generar caso" icon="pi pi-plus" type="button" class="p-button-raised p-button-rounded p-button-success"></button>
+                            </div>
+                        </div>
+                    </div>
+                <div class="w-10 max-h-10 justify-content-center align-items-center">
+                    <p-table
+                    #dt2
+                    [value]="cases"
+                    dataKey="id"
+                    [rows]="5"
+                    [scrollable]="true" 
+                    scrollHeight="470px"
+                    [showCurrentPageReport]="true"
+                    [rowsPerPageOptions]="[5, 10, 15]"
+                    [paginator]="true"
+                    currentPageReportTemplate="Mostrando {first} de hasta {last} de {totalRecords} entradas"
+                    [globalFilterFields]="['title', 'nrc.name', 'campus.name', 'status']"
+                >
+                    <ng-template pTemplate="caption">
+                        <div class="flex">
+                            <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt2)"></button>
+                            <span class="p-input-icon-left ml-auto">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar" />
+                            </span>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="flex justify-content-center" style="min-width:15rem">
+                                <div class="flex align-items-center">
+                                    <p-columnFilter type="text" field="title" display="menu"></p-columnFilter>
+                                    Título
+                                </div>
+                            </th>
+                            <th style="min-width:15rem">
+                                <div class="flex align-items-center justify-content-center">
+                                    <p-columnFilter type="text" field="nrc.name" display="menu"></p-columnFilter>
+                                    Asignatura
+                                </div>
+                            </th>
+                            <th style="min-width:15rem">
+                                <div class="flex align-items-center justify-content-center">
+                                    
+                                    <p-columnFilter type="date" field="createdAt" display="menu"></p-columnFilter>
+
+                                    Fecha de creación
+                                </div>
+                            </th>
+                            <th class="text-center" style="min-width:10rem">
+                                <div class="flex align-items-center">
+                                    Campus
+                                </div>
+                            </th>
+                            
+                            <th style="min-width:10rem">
+                                <div class="flex align-items-center">
+                                    
+                                    <p-columnFilter field="status" matchMode="equals" display="menu">
+                                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                            <p-dropdown  class="text-center" [options]="statuses" (onChange)="filter($event.value)" placeholder="Cualquiera">
+                                                <ng-template let-option pTemplate="item">
+                                                    <p-tag [value]="option.value | caseStatus" [severity]="getSeverity(option.value)"></p-tag>
+                                                </ng-template>
+                                            </p-dropdown>
+                                        </ng-template>
+                                    </p-columnFilter>
+                                    Estado
+                                </div>
+                            </th>
+                            <th style="min-width:10rem">
+                                <div class="flex align-items-center">
+                                    Acciones
+                                       
+                                </div>
+                            </th>
+                            
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-case>
+                        <tr>
+                            <td class="text-center">
+                                {{ case.title }}
+                            </td>
+                            <td class="text-center">
+                                {{case.nrc.name}}
+                            </td>
+                            <td class="text-center">
+                                {{case.createdAt | date: 'MM/dd/yyyy' }}
+                            </td>
+                            <td class="text-center">
+                                {{ case.campus.name }}
+                            </td>
+                            <td class="text-center">
+                                <p-tag [value]="case.status | caseStatus" [severity]="getSeverity(case.status)"></p-tag>
+                            </td>
+                          
+                            <td class="text-center">
+                                <p-button
+                                styleClass="p-button-rounded p-button-secondary p-button-text "
+                                icon="pi pi-eye" (onClick)="getCase(case.id, 'VIEW')"></p-button>
+                              
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="7">No hay casos.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                </div>
+                </div>
+            </div>
+
+
+        </ng-template>
+        <ng-template #professor>
+            <div  class="h-full w-9 flex flex-column justify-content-center align-items-end bg-white shadow-2"> 
+               
+                
+                <div class="h-full w-full flex justify-content-center align-items-center flex-column">
+                    <div style="background-color: #962330;color: white" class=" flex w-10 justify-content-center align-items-center">
+                        <h3>
+                            CASOS ESTUDIANTE
+                        </h3>
+                            
+                    </div>
+                <div class="w-10 max-h-10 justify-content-center align-items-center">
+                    <p-table
+                    #dt3
+                    [value]="cases"
+                    dataKey="id"
+                    [rows]="5"
+                    [scrollable]="true" 
+                    scrollHeight="470px"
+                    [showCurrentPageReport]="true"
+                    [rowsPerPageOptions]="[5, 10, 15]"
+                    [paginator]="true"
+                    currentPageReportTemplate="Mostrando {first} de hasta {last} de {totalRecords} entradas"
+                    [globalFilterFields]="['title', 'nrc.name', 'campus.name', 'status']"
+                >
+                    <ng-template pTemplate="caption">
+                        <div class="flex">
+                            <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt3)"></button>
+                            <span class="p-input-icon-left ml-auto">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text" (input)="dt3.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar" />
+                            </span>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="min-width:15rem" class="text-center">
+                                <div class="flex align-items-center w-full">
+                                    <p-columnFilter type="text" field="title" display="menu"></p-columnFilter>
+                                    Título
+                                </div>
+                            </th>
+                            <th style="min-width:15rem" class="text-center">
+                                <div class="flex align-items-center ">
+                                    <p-columnFilter type="text" field="nrc.name" display="menu"></p-columnFilter>
+                                    Asignatura
+                                </div>
+                            </th>
+                            <th style="min-width:15rem">
+                                <div class="flex align-items-center">
+                                    
+                                    <p-columnFilter type="date" field="createdAt" display="menu"></p-columnFilter>
+
+                                    Fecha de creación
+                                </div>
+                            </th>
+                            <th style="min-width:10rem">
+                                <div class="flex align-items-center">
+                                    Campus
+                                </div>
+                            </th>
+                            
+                            <th style="min-width:10rem">
+                                <div class="flex align-items-center">
+                                    
+                                    <p-columnFilter field="status" matchMode="equals" display="menu">
+                                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                            <p-dropdown class="text-center" [options]="statuses" (onChange)="filter($event.value)" placeholder="Cualquiera">
+                                                <ng-template let-option pTemplate="item">
+                                                    <p-tag [value]="option.value | caseStatus" [severity]="getSeverity(option.value)"></p-tag>
+                                                </ng-template>
+                                            </p-dropdown>
+                                        </ng-template>
+                                    </p-columnFilter>
+                                    Estado
+                                </div>
+                            </th>
+                            <th style="min-width:10rem">
+                                <div class="flex align-items-center">
+                                    Acciones
+                                       
+                                </div>
+                            </th>
+                            
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-case>
+                        <tr>
+                            <td class="text-center">
+                                {{ case.title }}
+                            </td>
+                            <td class="text-center ">
+                                {{case.nrc.name}}
+                            </td>
+                            <td class="text-center">
+                                {{case.createdAt | date: 'MM/dd/yyyy' }}
+                            </td>
+                            <td class="text-center">
+                                {{ case.campus.name }}
+                            </td>
+                            <td class="text-center">
+                                <p-tag [value]="case.status | caseStatus" [severity]="getSeverity(case.status)"></p-tag>
+                            </td>
+                          
+                            <td class="text-center">
+                                <p-button
+                                styleClass="p-button-rounded p-button-secondary p-button-text "
+                                icon="pi pi-eye" (onClick)="getCase(case.id, 'VIEW')"></p-button>
+                                <p-button *ngIf="case.status=='APPROVED'" 
+                                styleClass="p-button-rounded p-button-secondary p-button-text"
+                                icon="pi pi-pencil"
+                                (onClick)="getCase(case.id, 'EDIT')"></p-button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="7">No hay casos.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+
+                </div>
+                </div>
+                
+            </div>
+
+            <!-- <p-table
+    #dt 
+    dataKey="title"
+    [rowHover]="true" 
+    [showCurrentPageReport]="true" 
+    [filterDelay]="0" 
+    [globalFilterFields]="['title', 'category', 'rating']" 
+> 
+    <ng-template pTemplate="caption"> 
+        <div class="table-header">Casos de los estudiantes</div> 
+    </ng-template> 
+    <ng-template pTemplate="header"> 
+        <tr> 
+            <th style="width: 3rem"> 
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox> 
+            </th> 
+            <th pSortableColumn="title"> 
+                <div class="flex justify-content-between align-items-center"> 
+                    TÍTULO 
+                    <p-sortIcon field="title"></p-sortIcon> 
+                    <p-columnFilter
+                        type="text"
+                        field="title"
+                        display="menu"
+                        class="ml-auto"> 
+                    </p-columnFilter> 
+                </div> 
+            </th> 
+            <th pSortableColumn="category"> 
+                <div class="flex justify-content-between align-items-center"> 
+                    ASIGNATURA
+                    <p-sortIcon field="category"></p-sortIcon> 
+                    <p-columnFilter
+                        type="text"
+                        field="category"
+                        display="menu"
+                        class="ml-auto"> 
+                    </p-columnFilter> 
+                </div> 
+            </th> 
+  
+            <th pSortableColumn="rating"> 
+                <div class="flex justify-content-between align-items-center"> 
+                    FECHA DE CREACIÓN 
+                    <p-sortIcon field="rating"></p-sortIcon> 
+                    <p-columnFilter
+                        type="numeric"
+                        field="rating"
+                        display="menu"
+                        class="ml-auto"> 
+                    </p-columnFilter> 
+                </div> 
+            </th> 
+            <th pSortableColumn="rating"> 
+                <div class="flex justify-content-between align-items-center"> 
+                    CAMPUS
+                    <p-sortIcon field="rating"></p-sortIcon> 
+                    <p-columnFilter
+                        type="numeric"
+                        field="rating"
+                        display="menu"
+                        class="ml-auto"> 
+                    </p-columnFilter> 
+                </div> 
+            </th> 
+            <th pSortableColumn="rating"> 
+                <div class="flex justify-content-between align-items-center"> 
+                    ESTADO
+                    <p-sortIcon field="rating"></p-sortIcon> 
+                    <p-columnFilter
+                        type="numeric"
+                        field="rating"
+                        display="menu"
+                        class="ml-auto"> 
+                    </p-columnFilter> 
+                </div> 
+            </th> 
+            <th pSortableColumn="rating"> 
+                <div class="flex justify-content-between align-items-center"> 
+                    ACCIONES
+                    <p-sortIcon field="rating"></p-sortIcon> 
+                    <p-columnFilter
+                        type="numeric"
+                        field="rating"
+                        display="menu"
+                        class="ml-auto"> 
+                    </p-columnFilter> 
+                </div> 
+            </th> 
+        </tr> 
+    </ng-template> 
+  
+    <ng-template pTemplate="body" let-case> 
+        <tr class="p-selectable-row"> 
+            <td> 
+                <p-tableCheckbox [value]="case"> </p-tableCheckbox> 
+            </td> 
+            <td> 
+                <span class="p-column-title"> Título </span> 
+                {{ case.title }} 
+            </td> 
+            <td> 
+                <span class="p-column-title"> Asignatura </span> 
+                <span class="image-text"> 
+                    {{ case.nrc.name }} 
+                </span> 
+            </td> 
+            <td> 
+                <span class="p-column-title"> Fecha de creación </span> 
+                <span class="image-text"> 
+                    {{ case.createdAt }} 
+                </span> 
+            </td> 
+        </tr> 
+    </ng-template> 
+</p-table> -->
+        </ng-template>
+ 
 
     </div>
 </section>
-<app-case-review (onClose)="handleClose($event)" [case]="selectedCase" [visible]="visible" [action]="selectedAction" (onUpdate)="getCases()"></app-case-review>
+<app-case-review (onClose)="handleClose($event)" [case]="selectedCase"
+    [visible]="visible" [action]="selectedAction" (onUpdate)="getCases()"></app-case-review>
 
-<!-- <p-dialog *ngIf="isLoaded==true" [header]="case.title" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
-
-    
-    <div class="flex flex-column gap-2">
-        <div class="flex flex-row justify-content-between">
-            <h5 class="m-0 text-gray-500">
-    
-                {{case.createdAt | date:"MMM dd, yyyy 'a las' hh:mm a"}}
-            </h5>
-            <div>
-                {{case.files}}
-            </div>
-            
-
-        </div>
-        <p class="m-0">
-            {{case.description}}
-        </p>
-        <h5>Estudiante: {{case.student.name}} {{case.student.surname}}</h5>
-    </div>
-        
-    <p-divider></p-divider>
-    <div *ngIf="case.response===null && userRole==='STUDENT'" class="flex align-items-center justify-content-center flex-row gap-3">
-            <h3>Aún no hay respuesta</h3>
-            <i class="pi pi-info-circle"></i>
-    </div>
-    <div *ngIf="case.response!=null" class="flex flex-column gap-2">
-        <div class="flex flex-row justify-content-between">
-            <h5 class="m-0 text-gray-500">
-    
-                {{case.respondedAt | date:"MMM dd, yyyy 'a las' hh:mm a"}}
-            </h5>
-            
-
-        </div>
-        <p class="m-0">
-            {{case.response}}
-        </p>
-        <h5>Profesor: {{case.professor.name}} {{case.professor.surname}} </h5>
-    </div>
-</p-dialog>
-<p-dialog *ngIf="isLoaded==true" [header]="case.title" [(visible)]="visibleResponse" [modal]="true" [style]="{ width: '60vw', height:'60vw'}" [draggable]="false" [resizable]="false">
-    
-    <div class="flex flex-column gap-2">
-        <div class="flex flex-row justify-content-between">
-            <h5 class="m-0 text-gray-500">
-    
-                {{case.createdAt | date:"MMM dd, yyyy 'a las' hh:mm a"}}
-            </h5>
-            <div>
-                {{case.files}}
-            </div>
-            
-
-        </div>
-        <p class="m-0">
-            {{case.description}}
-        </p>
-        <h5>Estudiante: {{case.student.name}} {{case.student.surname}}</h5>
-    </div>
-        
-    <p-divider></p-divider>
-    <div class="flex align-items-center justify-content-center flex-column gap-3">
-        <div class="flex flex-row justify-content-between align-items-center w-full">
-            <h5>Escriba su respuesta</h5>
-            <div class="flex flex-row align-items-center gap-3">
-                <h5>Seleccione una fecha:</h5>
-                <p-calendar formControlName="date"></p-calendar>
-                
-            </div>
-            
-            <h5>Aprobado</h5>
-        </div>
-        <textarea rows="5" cols="30" pInputTextarea formControlName="description" [ngStyle]="{'resize':'none','width':'100%','height':'100%'}"></textarea>
-    </div>
-    
-</p-dialog> -->

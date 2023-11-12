@@ -113,6 +113,40 @@
                     </div>
                 </div>
             </form>
+            
+        </div>
+        <div *ngIf="case?.response== null && action=='VIEW'" >
+            <p-divider></p-divider>
+            <div class="flex align-items-center justify-content-center flex-row gap-3">
+                <h3>Aún no hay respuesta</h3>
+                <i class="pi pi-info-circle"></i>
+            </div>
+
+        </div>
+        <div *ngIf="case?.response && action=='VIEW'" >
+            <div class="flex flex-column gap-2">
+                <div>
+                    <h3>Su respuesta:</h3>
+                </div>
+                <div class="flex flex-row justify-content-between align-items-center">
+                    <h5 class="m-0 text-gray-500">
+                        {{case?.respondedAt | date:"MMM dd, yyyy 'a las' hh:mm a" | titlecase}}
+                    </h5>
+                    <h5 *ngIf="!case?.dataTest">
+                        Nueva fecha evaluación:
+                         {{case?.dateTest | date:"fullDate" | titlecase}}
+                    </h5>
+                </div>
+                <div class="m-0">
+                    <div class="flex flex-column gap-1">
+                        <label for="description text-gray-500">Detalle: </label>
+                        <textarea id="description" disabled="true" [value]="case?.response" rows="5" cols="30" pInputTextarea [ngStyle]="{'resize':'none','width':'100%','height':'100%'}"></textarea>
+                    </div>
+                </div>
+                <h5>Profesor: {{case?.professor.name}} {{case?.professor.surname}}
+                </h5>
+            </div>
+
         </div>
     </ng-template>
     <ng-template #vr>
@@ -130,7 +164,7 @@
                             </div>
                             <div class="flex w-6 align-items-center justify-content-end gap-3">
 
-                                <h5>Seleccione una fecha:</h5>
+                                <h5>Seleccione un estado:</h5>
                                 <p-dropdown optionValue="enum" [options]="status" [style]="{'width': '10rem'}" formControlName="status" optionLabel="name" placeholder="Selecione un estado"></p-dropdown>
                             </div>
                         </div>
@@ -153,6 +187,39 @@
                     </div>
                 </div>
             </form>
+        </div>
+        <div *ngIf="case?.vrResponse== null  && action=='VIEW'" >
+            <p-divider></p-divider>
+            <div class="flex align-items-center justify-content-center flex-row gap-3">
+                <h3>Aún no hay respuesta</h3>
+                <i class="pi pi-info-circle"></i>
+            </div>
+
+        </div>
+        <div *ngIf="case?.vrResponse && action=='VIEW'" >
+            <div class="flex flex-column gap-2">
+                <div>
+                    <h3>Su respuesta:</h3>
+                </div>
+                <div class="flex flex-row justify-content-between align-items-center">
+                    <h5 class="m-0 text-gray-500">
+                        {{case?.respondedAt | date:"MMM dd, yyyy 'a las' hh:mm a" | titlecase}}
+                    </h5>
+                    <h5 class="m-0 text-gray-500">
+                        <input type="text" pInputText [value]="case.vrResponse" disabled="true" />
+                    </h5>
+                    
+                </div>
+                <div class="m-0">
+                    <div class="flex flex-column gap-1">
+                        <label for="description text-gray-500">Detalle: </label>
+                        <textarea id="description" disabled="true" [value]="case?.vrResponse" rows="5" cols="30" pInputTextarea [ngStyle]="{'resize':'none','width':'100%','height':'100%'}"></textarea>
+                    </div>
+                </div>
+                <h5>Usuario vicerrectoría: {{case?.VR.name}} {{case?.VR.surname}}
+                </h5>
+            </div>
+
         </div>
     </ng-template>
 </p-dialog>

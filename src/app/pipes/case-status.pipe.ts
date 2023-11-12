@@ -11,6 +11,19 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({name: 'caseStatus'})
 export class CaseStatusPipe implements PipeTransform{
     transform(value: any, ...args: any[]) {
-        
+
+        // return value
+        switch(value){
+            case 'APPROVED':
+                return 'Aprobado'
+            case 'REJECTED':
+                return 'Rechazado'
+            case 'UNSOLVED':
+               return 'En espera'
+            case 'SOLVED':
+                return 'Resuelto'
+            default:
+                return 'En espera'
+        }
     }
 }
