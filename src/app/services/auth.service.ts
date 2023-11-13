@@ -11,11 +11,9 @@ export const authFactory = (authService: AuthService) => () => {
   const _localuser: any = tokenGetter();
   const logged = authService.isLogged(_localuser);
   if (logged) {
-    console.log("🚀 ~ file: auth.service.ts:13 ~ authFactory ~ logged:", logged)
     authService.SetState(_localuser);
   } else {
     // remove leftover
-    console.log("🚀 ~ file: auth.service.ts:17 ~ authFactory ~ leftover")
     authService.RemoveState();
     // and clean localstroage
     localStorage.removeItem('user');

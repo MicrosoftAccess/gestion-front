@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { authGuard } from './guards/auth.guard';
+import { createCaseGuard } from './guards/create-case.guard';
 const routes: Routes = [
 
   {
@@ -16,7 +17,7 @@ const routes: Routes = [
   {
     path:'generate-cases',
     // component:RegisterComponent
-    canActivate: [authGuard],
+    canActivate: [authGuard,createCaseGuard],
     loadChildren: () => import('./pages/generate-cases/generate-cases.module').then(m => m.GenerateCasesModule)
   },
   {

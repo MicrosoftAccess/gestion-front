@@ -11,12 +11,19 @@ export const authGuard: CanActivateFn = (
 ) => {
 
   const token = tokenGetter();
-
+  
   if (route.routeConfig?.path?.includes('login')) {
     if (!token) return true;
 
     const expired = _jwtHelperService.isTokenExpired(token);
+    const userInfo = _jwtHelperService.decodeToken(token)
 
+    
+    console.log(userInfo.role)
+    if(userInfo.role !== 'STUDENT'){
+      router.navigate(['student-cases'])
+      return false
+    }
     if (!expired) router.navigate(['student-cases']);
     return expired;
   } else {

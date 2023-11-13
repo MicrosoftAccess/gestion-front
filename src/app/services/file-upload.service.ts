@@ -13,7 +13,6 @@ export class FileUploadService {
     const formData = new FormData();
 
     formData.append('file',file, file.name)
-    console.log(formData);
     
     return this.http.post(this.BASE_URL,formData)
   }

@@ -41,7 +41,7 @@ export class GenerateCasesComponent {
   selectedCampus!: Campus;
   selectedNRC!:any
   ngOnInit() {
-    this.getNrcs()
+    // this.getNrcs()
     this.campusDropDown = [
       { id: 1, name: 'Antonio Varas' },
       { id: 2, name: 'Bellavista' },
@@ -81,20 +81,17 @@ export class GenerateCasesComponent {
     this._nrcService.getAllNRC().subscribe({
       next:(value)=> {
         this.nrcDropDown = value
-        // console.log(this.nrcDropDown);
         
       },
     })
   }
 
   removePicture(hiddenPicAccessor:any){
-    console.log(hiddenPicAccessor)
   }
 
   getNRCbyCampus(event:any){
     this.caseForm.get('nrc')?.enable()
     this.selectedCampus = event
-    console.log(this.selectedCampus);
     
     this._nrcService.getByCampus(event.value).subscribe({
       next:(res)=>{
@@ -118,13 +115,11 @@ export class GenerateCasesComponent {
     fd.append('file', this.f['file'].value, `${this.f['file'].value.name}`);
     fd.append('form', JSON.stringify(this.caseForm.value));
 
-    console.log(this.caseForm.value);
-    console.log(this.selectedNRC);
+    
     
     
     this._casesService.create(fd).subscribe({
       next: (res) => {
-        console.log(res);
         
         this._messageService.add({
           severity: 'success',

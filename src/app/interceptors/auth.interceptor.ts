@@ -17,7 +17,6 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     
-    console.log("🚀 ~ file: auth.interceptor.ts:21 ~ AuthInterceptor ~ request:", request)
     return next.handle(request);
   }
 

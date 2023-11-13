@@ -23,13 +23,5 @@ export class NavbarComponent {
     return `${this._jwtService.decodeToken(tokenGetter()).name} ${this._jwtService.decodeToken(tokenGetter()).surname}`
   }
   userInfo!:any
-  getUserInfo(){
-  //   this._loginService.getCurrentUser().subscribe({
-  //     next:(res) => {
-  //       this.userInfo = res
-  //       console.log(this.userInfo);
-        
-  //     },
-  //   })
-  }
+  
 }

@@ -86,15 +86,12 @@ export class CaseReviewComponent {
   handleDisable(event:any){
     this.isDisabled = event.value == 'Rechazado' 
 
-    console.log(this.caseReviewForm);
   }
 
   onSubmit(id:any){
 
-    // console.log(JSON.stringify(this.caseReviewForm.value.dateSelected));
     
     this.caseReviewForm.value.dateSelected = JSON.stringify(this.caseReviewForm.value.dateSelected)
-    console.log(this.caseReviewForm.value);
     
       this._caseService.updateCase(id,this.caseReviewForm.value).subscribe({
         next:(value)=>{
@@ -107,13 +104,11 @@ export class CaseReviewComponent {
           this.caseReviewForm = this.formBuilder()
           this.onUpdate.emit()
           this.visible = false
-          console.log(value);
         },
       })
   }
 
   onSubmitVR(id:any){
-    console.log(this.caseReviewFormVR.value);
     
     this._caseService.updateCase(id,this.caseReviewFormVR.value).subscribe({
       next:(value)=> {

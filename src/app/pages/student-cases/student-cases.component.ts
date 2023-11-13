@@ -108,7 +108,6 @@ export class StudentCasesComponent {
     this._casesService.getAllCases().subscribe({
       next: (data: any) => {
         this.cases = data;
-        console.log(data);
       },
     });
     // const titles = this.cases.map(case=> this.case.title)
@@ -121,7 +120,6 @@ export class StudentCasesComponent {
 
   onClick(option:any){
     let query:any
-    console.log(this.campusForm.value)
     
     switch(option){
       case 1:
@@ -161,7 +159,6 @@ export class StudentCasesComponent {
         this.selectedCase = res;
         this.visible = true;
         this.selectedAction = action;
-        console.log(res);
       },
     });
   }
@@ -187,7 +184,6 @@ export class StudentCasesComponent {
   }
   handleClose(event: any) {
     this.visible = event.value;
-    console.log(event.form);
   }
   update() {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Data Updated' });
