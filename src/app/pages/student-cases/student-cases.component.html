@@ -1,16 +1,10 @@
 <section class="w-full h-full ">
-    <div class="flex w-full h-full flex-column justify-content-center align-items-center surface-ground">
-
-       
+    <div class="flex w-full h-full flex-column justify-content-center align-items-center surface-ground">   
         <ng-container [ngSwitch]="userRole">
             <ng-container  *ngSwitchCase="'STUDENT'" [ngTemplateOutlet]="student"></ng-container> 
             <ng-container  *ngSwitchCase="'PROFESSOR'" [ngTemplateOutlet]="professor"></ng-container> 
             <ng-container *ngSwitchCase="'VR'" [ngTemplateOutlet]="vr"></ng-container>
         </ng-container>
-        
-   
-       
-
         <ng-template #vr>
             <div  class="h-full w-9 flex flex-column justify-content-center align-items-center bg-white shadow-2"> 
                
@@ -28,7 +22,7 @@
                                 <ng-container  *ngSwitchCase="'NRC'" [ngTemplateOutlet]="nrc"></ng-container>
                             </ng-container>
 
-                            <ng-template #rg> 
+                            <ng-template #rg>
                                 <button (click)="onClick(1)"  label="Descargar Excel" pButton type="button" icon="pi pi-download" class="p-button-success" iconPos="right"></button>
                         </ng-template>
                             <ng-template #ca>
@@ -47,6 +41,7 @@
                                             <span class="w-full">
                                                 <p-dropdown [style]="{'width':'100%'}" formControlName="campus"  [options]="campus"  optionLabel="name"  placeholder="Seleccione un periodo"></p-dropdown>
                                             </span>
+                                            
                                             <span class="w-full">
                                                 <p-dropdown [style]="{'width':'100%'}" formControlName="period"  [options]="periods"  optionLabel="name"  placeholder="Seleccione un periodo"></p-dropdown>
                                             </span>
@@ -205,20 +200,16 @@
                 
                 <div class="h-full w-full flex justify-content-center align-items-center flex-column">
                     <div style="background-color: #962330;color: white" class=" flex w-10 justify-content-center align-items-center">
-                        <div class="w-full h-full grid">
-                            <div class="col-4">
-
-                            </div>
-                            <div class="flex justify-content-center col-4">
+                        <div class="w-full h-full flex justify-content-center"
+                        >
+                 
                                 <h3>
                                     MIS CASOS
                                 </h3>
                                 
-                            </div>
+              
                                 
-                            <div class="flex col-4 justify-content-end align-items-center">
-                                <button pButton (click)="goToPage(['/generate-cases']);" label="Generar caso" icon="pi pi-plus" type="button" class="p-button-raised p-button-rounded p-button-success"></button>
-                            </div>
+                            
                         </div>
                     </div>
                 <div class="w-10 max-h-10 justify-content-center align-items-center">
@@ -237,11 +228,18 @@
                 >
                     <ng-template pTemplate="caption">
                         <div class="flex">
-                            <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt2)"></button>
-                            <span class="p-input-icon-left ml-auto">
-                                <i class="pi pi-search"></i>
-                                <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar" />
-                            </span>
+                            <div class="flex gap-2 align-items-center w-6">
+                                <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt2)"></button>
+                                <button pButton (click)="goToPage(['/generate-cases']);" label="Generar caso" icon="pi pi-plus" type="button" class="p-button-raised  p-button-success"></button>
+
+                            </div>
+                            <div class="flex justify-content-end w-6">
+                                <span class="p-input-icon-left ml-auto">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')" placeholder="Buscar" />
+                                </span>
+
+                            </div>
                         </div>
                     </ng-template>
                     <ng-template pTemplate="header">

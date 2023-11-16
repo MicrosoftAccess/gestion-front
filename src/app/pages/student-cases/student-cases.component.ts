@@ -31,6 +31,7 @@ export class StudentCasesComponent {
   sidebarVisible: boolean = false;
   activityValues: number[] = [0, 100];
   selectedQuery: any
+  date: number | undefined
   constructor(
     private router: Router,
     private _casesService: CasesService,
@@ -154,9 +155,12 @@ export class StudentCasesComponent {
  
 
   getCase(id: any, action: string) {
+    
+    
     this._casesService.getCase(id).subscribe({
       next: (res: any) => {
         this.selectedCase = res;
+        console.log(res)
         this.visible = true;
         this.selectedAction = action;
       },

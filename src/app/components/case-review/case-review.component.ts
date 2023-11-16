@@ -105,11 +105,20 @@ export class CaseReviewComponent {
           this.onUpdate.emit()
           this.visible = false
         },
+        error:error =>{
+          this._messageService.add({
+            severity: 'error',
+            summary: 'Hay campos incompletos',
+            detail: 'Debes agregar todos los campos necesarios',
+          });
+        }
       })
   }
 
   onSubmitVR(id:any){
     
+    
+
     this._caseService.updateCase(id,this.caseReviewFormVR.value).subscribe({
       next:(value)=> {
         this._messageService.add({
@@ -119,7 +128,15 @@ export class CaseReviewComponent {
         });
         this.caseReviewFormVR = this.formBuilderVR()
         this.onUpdate.emit()
+        this.visible = false
       },
+      error:error =>{
+        this._messageService.add({
+          severity: 'error',
+          summary: 'Hay campos incompletos',
+          detail: 'Debes agregar una respuesta y/o un estado para la solicitud',
+        })
+      }
     })
   }
 

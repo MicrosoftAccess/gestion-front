@@ -63,13 +63,18 @@ export class GenerateCasesComponent {
   get f() {
     return this.caseForm.controls;
   }
+  get title() {
+    return this.caseForm.get('title');
+  }
 
   processFile(event: any) {
     const file: File = <File>event.target.files[0];
     const reader = new FileReader();
-
+    console.log(file);
+    
     reader.readAsDataURL(file);
     this.f['file'].setValue(file);
+    this.fileName = file.name
     this._messageService.add({
       severity: 'info',
       summary: 'Archivo subido',
@@ -107,7 +112,7 @@ export class GenerateCasesComponent {
       nrc: [{value:null,disabled:true}, Validators.required],
       campus: ['', Validators.required],
       description: ['', Validators.required],
-      file: ['', Validators.required],
+      file: [null, Validators.required],
     });
   }
   createCase() {
@@ -115,7 +120,7 @@ export class GenerateCasesComponent {
     fd.append('file', this.f['file'].value, `${this.f['file'].value.name}`);
     fd.append('form', JSON.stringify(this.caseForm.value));
 
-    
+    console.log(this.caseForm)
     
     
     this._casesService.create(fd).subscribe({
@@ -127,8 +132,12 @@ export class GenerateCasesComponent {
           detail: 'Se ha creado tu caso con éxito',
         });
         this.caseForm = this.formBuilder();
+        this.fileName = ''
         this.inputFile.nativeElement.value = null;
       },
+      error:error =>{
+        this._messageService.add({ severity: 'error', summary: 'Error', detail: 'Message Content' });
+      }
     });
   }
 }

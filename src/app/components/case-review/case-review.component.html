@@ -59,7 +59,7 @@
                     {{case?.respondedAt | date:"MMM dd, yyyy 'a las' hh:mm a" | titlecase}}
                 </h5>
                 <h5 *ngIf="!case?.dataTest">
-                    Nueva fecha evaluación:
+                    Fecha designada:
                      {{case?.dateTest | date:"fullDate" | titlecase}}
                 </h5>
             </div>
@@ -91,7 +91,7 @@
                             <div class="flex w-6 align-items-center justify-content-end gap-3">
 
                                 <h5>Seleccione una fecha:</h5>
-                                <p-calendar [minDate]="minDate" dateFormat="dd/mm/yy" dataType="date" [readonlyInput]="true" appendTo="body" formControlName="dateTest"></p-calendar>
+                                <p-calendar  dateFormat="dd/mm/yy" dataType="date" [readonlyInput]="true" appendTo="body" formControlName="dateTest"></p-calendar>
                             </div>
                         </div>
 
@@ -221,5 +221,6 @@
             </div>
 
         </div>
+        
     </ng-template>
 </p-dialog>

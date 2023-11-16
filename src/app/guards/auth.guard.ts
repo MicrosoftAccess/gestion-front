@@ -16,14 +16,10 @@ export const authGuard: CanActivateFn = (
     if (!token) return true;
 
     const expired = _jwtHelperService.isTokenExpired(token);
-    const userInfo = _jwtHelperService.decodeToken(token)
+
 
     
-    console.log(userInfo.role)
-    if(userInfo.role !== 'STUDENT'){
-      router.navigate(['student-cases'])
-      return false
-    }
+
     if (!expired) router.navigate(['student-cases']);
     return expired;
   } else {
