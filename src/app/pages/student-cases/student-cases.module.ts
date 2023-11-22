@@ -40,7 +40,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     InputTextModule,
     SidebarModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TooltipModule
     
 
   ]

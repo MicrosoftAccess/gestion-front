@@ -160,7 +160,6 @@ export class StudentCasesComponent {
     this._casesService.getCase(id).subscribe({
       next: (res: any) => {
         this.selectedCase = res;
-        console.log(res)
         this.visible = true;
         this.selectedAction = action;
       },

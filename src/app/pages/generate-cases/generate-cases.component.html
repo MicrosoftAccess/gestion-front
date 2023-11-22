@@ -30,44 +30,40 @@
                                 <input placeholder="Asunto"
                                     formControlName="title"
                                     [ngStyle]="{'width':'95%'}" pInputText />
-                                <!-- <div *ngIf="title.errors?.['required']">Name is required.</div> -->
+   
                             </div>
-                            <!-- <div class="w-3">
-                                <input type="number" placeholder="NRC"
-                                    formControlName="nrc" pInputText />
-                            </div>
-                            <div class="w-3">
-                                <p-dropdown placeholder="Campus"
-                                    [options]="campusDropDown"
-                                    formControlName="campus" optionLabel="name"
-                                    optionValue="id" [style]="{'width':'90%'}"></p-dropdown>
-                            </div> -->
+
                         </div>
-                        <div class="grid mt-2">
-                            <div class="col-4 justify-content-start">
-                                <!-- <input placeholder="Campus" formControlName="campus" pInputText  /> -->
-                                <p-dropdown placeholder="Campus"
-                                    [options]="campusDropDown"
-                                    (onChange)="getNRCbyCampus($event)"
-                                    formControlName="campus" optionLabel="name"
-                                    optionValue="id" [style]="{'width':'90%','marginLeft':'18px'}"></p-dropdown>
+                        <div class="flex w-full justify-content-between align-items-center" >
+                            <div class="flex wp-3 align-items-center justify-content-center">
+                                <span class="w-full ">
+                                    <p-dropdown placeholder="Campus"
+                                        [options]="campusDropDown"
+                                        (onChange)="getNRCbyCampus($event)"
+                                        formControlName="campus" optionLabel="name"
+                                        optionValue="id" [style]="{'width':'90%','margin-left':'8%'}"></p-dropdown>
+
+                                </span>
                             </div>
                             
-                            <div class="col-8 justify-content-end">
-                                <p-dropdown placeholder="Asignatura"
-                                    [options]="nrcDropDown"
-                                    [filter]="true" filterBy="name"
-                                    formControlName="nrc" optionLabel="name"
-                                    [style]="{'width':'96%',}"></p-dropdown>
-                                <!-- <input type="number" placeholder="NRC" 
-                                    formControlName="nrc" pInputText  [style]="{'width':'96%'}"/> -->
+                            <div class="flex wp-7 justify-content-end">
+                                <span class=w-full>
+                                    <p-dropdown placeholder="Asignatura"
+                                        [options]="nrcDropDown"
+                                        class="overflow-auto"
+                                        [filter]="true" filterBy="name"
+                                        formControlName="nrc" optionLabel="name"
+                                        [style]="{'width':'96%',}"></p-dropdown>
+
+                                </span>
+
                             </div>
                         </div>
                         <div
-                            class="flex justify-content-center align-items-center w-full h-full flex-column">
+                            class="flex justify-content-start align-items-center w-full h-full flex-column">
                             <textarea rows="5" cols="30" pInputTextarea
                                 formControlName="description"
-                                [ngStyle]="{'resize':'none','width':'95%','height':'80%'}"></textarea>
+                                [ngStyle]="{'resize':'none','width':'95%','height':'90%'}"></textarea>
 
                         </div>
                         <div

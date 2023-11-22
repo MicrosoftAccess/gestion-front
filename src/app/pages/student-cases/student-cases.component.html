@@ -13,7 +13,7 @@
                         <h3>Generar excel por:</h3>
                         <div class="flex flex-column gap-3 w-full align-items-center justify-content-center">
                             <span class="w-full">
-                                <p-dropdown [style]="{'width':'100%'}" (onChange)="onChange()" [(ngModel)]="selectedQuery" [options]="query"  optionLabel="name"  placeholder="Seleccione filtos"></p-dropdown>
+                                <p-dropdown [style]="{'width':'100%'}" (onChange)="onChange()" [(ngModel)]="selectedQuery" [options]="query"  optionLabel="name"  placeholder="Seleccione filtros"></p-dropdown>
                             </span>
                             <ng-container [ngSwitch]="selectedQuery?.code">
                                 <ng-container  *ngSwitchCase="'RG'" [ngTemplateOutlet]="rg"></ng-container>
@@ -26,15 +26,6 @@
                                 <button (click)="onClick(1)"  label="Descargar Excel" pButton type="button" icon="pi pi-download" class="p-button-success" iconPos="right"></button>
                         </ng-template>
                             <ng-template #ca>
-                                <!-- <form (ngSubmit)="onClick(2)" [formGroup]="campusForm" class="flex gap-3 flex-column w-full" >
-                                    <span class="w-full">
-                                        <p-dropdown [style]="{'width':'100%'}" formControlName="campus"   [options]="campus"  optionLabel="name"  placeholder="Seleccione un campus"></p-dropdown>
-                                    </span>
-                                    <span class="w-full">
-                                        <p-dropdown [style]="{'width':'100%'}" formControlName="period"  [options]="periods"  optionLabel="name"  placeholder="Seleccione un periodo"></p-dropdown>
-                                    </span>
-                                    <button type="submit" label="Descargar Excel" pButton type="button" icon="pi pi-download" class="p-button-success" iconPos="right"></button>
-                                </form> -->
                                 <form [formGroup]="campusForm" (ngSubmit)="onClick(2)" class="w-full">
                                     <div class="flex align-items-center justify-content-center flex-column gap-3">
                                       
@@ -65,7 +56,7 @@
                     </div>
                 </p-sidebar>
                 <div class="h-full w-full flex justify-content-center align-items-center flex-column">
-                    <div style="background-color: #962330;color: white" class=" flex w-10 justify-content-center align-items-center">
+                    <div style="background-color: #962330;color: white" class=" flex w-10 lg:mt-10 md:mt-8 justify-content-center align-items-center">
                         <h3>
                             CASOS ESTUDIANTE
                         </h3>
@@ -155,21 +146,22 @@
             </ng-template>
             <ng-template pTemplate="body" let-case>
                 <tr>
-                    <td class="text-center">
-                        {{ case.title }}
+                    <td class="text-center " [pTooltip]="case.title" tooltipPosition="top">
+                        <!-- {{ case.title }} -->
+                        {{(case.title.length>15)? (case.title | slice:0:15)+'...':(case.title)}}
                     </td>
                     <td class="text-center">
-                        {{case.nrc.name}}
-                        <!-- {{(case.nrc.name.length>5)? (case.nrc.name | slice:0:10)+'...':(case.nrc.name)}} -->
+                        <!-- {{case.nrc.name}} -->
+                        {{(case.nrc.name.length>15)? (case.nrc.name | slice:0:15)+'...':(case.nrc.name)}}
                     </td>
                     <td class="text-center">
-                        {{ case.createdAt | date: 'MM/dd/yyyy' }}
+                        {{ case.createdAt | date: 'dd/MM/yyyy' }}
                     </td>
                     <td class="text-center">
                         {{ case.campus.name }}
                     </td>
                     <td style="text-align:center">
-                        <!-- {{case.status | caseStatus}} -->
+                    
                         <p-tag [value]="case.status | caseStatus" [severity]="getSeverity(case.status)"></p-tag>
                     </td>
                  
@@ -195,10 +187,10 @@
             </div>
         </ng-template>
         <ng-template #student>
-            <div  class="h-full w-9 flex flex-column justify-content-center align-items-end bg-white shadow-2"> 
+            <div  class="h-full w-9 flex flex-column  justify-content-center align-items-end bg-white shadow-2"> 
                
                 
-                <div class="h-full w-full flex justify-content-center align-items-center flex-column">
+                <div class="h-full w-full flex justify-content-center align-items-center flex-column lg:mt-8 md:mt-8">
                     <div style="background-color: #962330;color: white" class=" flex w-10 justify-content-center align-items-center">
                         <div class="w-full h-full flex justify-content-center"
                         >
@@ -297,13 +289,13 @@
                     <ng-template pTemplate="body" let-case>
                         <tr>
                             <td class="text-center">
-                                {{ case.title }}
+                                {{(case.title.length>15)? (case.title | slice:0:15)+'...':(case.title)}}
                             </td>
                             <td class="text-center">
-                                {{case.nrc.name}}
+                                {{(case.nrc.name.length>15)? (case.nrc.name | slice:0:15)+'...':(case.nrc.name)}}
                             </td>
                             <td class="text-center">
-                                {{case.createdAt | date: 'MM/dd/yyyy' }}
+                                {{case.createdAt | date: 'dd/MM/yyyy' }}
                             </td>
                             <td class="text-center">
                                 {{ case.campus.name }}
@@ -336,7 +328,7 @@
             <div  class="h-full w-9 flex flex-column justify-content-center align-items-end bg-white shadow-2"> 
                
                 
-                <div class="h-full w-full flex justify-content-center align-items-center flex-column">
+                <div class="h-full lg:mt-8 md:mt-8 w-full flex justify-content-center align-items-center flex-column">
                     <div style="background-color: #962330;color: white" class=" flex w-10 justify-content-center align-items-center">
                         <h3>
                             CASOS ESTUDIANTE
@@ -421,13 +413,13 @@
                     <ng-template pTemplate="body" let-case>
                         <tr>
                             <td class="text-center">
-                                {{ case.title }}
+                                {{(case.title.length>15)? (case.title | slice:0:15)+'...':(case.title)}}
                             </td>
                             <td class="text-center ">
-                                {{case.nrc.name}}
+                                {{(case.nrc.name.length>15)? (case.nrc.name | slice:0:15)+'...':(case.nrc.name)}}
                             </td>
                             <td class="text-center">
-                                {{case.createdAt | date: 'MM/dd/yyyy' }}
+                                {{case.createdAt | date: 'dd/MM/yyyy' }}
                             </td>
                             <td class="text-center">
                                 {{ case.campus.name }}

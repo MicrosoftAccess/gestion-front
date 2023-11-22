@@ -4,7 +4,6 @@ import { inject } from '@angular/core';
 
 export const authResolver: ResolveFn<boolean> = (route, state, authService: AuthService = inject(AuthService)) => {
   authService.stateItem$.subscribe(state => {
-    console.log(state);
     
   })
   return true;

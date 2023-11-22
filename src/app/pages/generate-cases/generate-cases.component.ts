@@ -70,7 +70,6 @@ export class GenerateCasesComponent {
   processFile(event: any) {
     const file: File = <File>event.target.files[0];
     const reader = new FileReader();
-    console.log(file);
     
     reader.readAsDataURL(file);
     this.f['file'].setValue(file);
@@ -116,11 +115,13 @@ export class GenerateCasesComponent {
     });
   }
   createCase() {
+    if(this.caseForm.value.file == null){
+      this._messageService.add({ severity: 'error', summary: 'Falta archivo', detail: 'Debe subir un archivo!' });
+    }
     const fd: FormData = new FormData();
     fd.append('file', this.f['file'].value, `${this.f['file'].value.name}`);
     fd.append('form', JSON.stringify(this.caseForm.value));
-
-    console.log(this.caseForm)
+   
     
     
     this._casesService.create(fd).subscribe({
@@ -136,7 +137,7 @@ export class GenerateCasesComponent {
         this.inputFile.nativeElement.value = null;
       },
       error:error =>{
-        this._messageService.add({ severity: 'error', summary: 'Error', detail: 'Message Content' });
+        this._messageService.add({ severity: 'error', summary: 'Faltan datos', detail: 'Recuerde rellenar todos los campos!' });
       }
     });
   }

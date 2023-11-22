@@ -21,8 +21,8 @@ export class LoginComponent {
     private _messageService: MessageService
   ) {
     this.loginForm = this._fb.group({
-      email: ['jpretamalesv@gmail.com', Validators.required],
-      password: ['pass123', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
     });
   }
 
@@ -36,7 +36,7 @@ export class LoginComponent {
         
       },
       error:error =>{
-        this._messageService.add({ severity: 'error', summary: 'Credenciales incorrectas', detail: 'Aseguresé de ingresar bien sus credenciales' });
+        this._messageService.add({ severity: 'error', summary: 'Credenciales incorrectas', detail: 'Asegúrese de ingresar bien sus credenciales' });
       }
     });
   }

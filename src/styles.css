@@ -21,6 +21,25 @@ body {
     width: 100%;
 }
 
-.max-w-6 {
-    max-width: 50% !important;
+.w-6 {
+    width: 50% !important;
+}
+
+.wp-2{
+    width: 20% !important;
+}
+
+.wp-3{
+    width: 30% !important;
+}
+
+.wp-8{
+    width: 80% !important;
+}
+
+.wp-7{
+    width: 70% !important;
+}
+.mt-10{
+    margin-top: 8rem;
 }
